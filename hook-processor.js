@@ -41,28 +41,26 @@ app.prepare()
         });
 
         server.post('/safehook', function (req, res) {
-            console.log('WhatsApp request body:', req.body);
-            const whatsappHmac = req.headers["x-hub-signature-256"];
-            console.log("HEADER\n\n")
-            console.log(whatsappHmac)
-            console.log("BOODY\n\n")
-            const testString = process.env.APP_SECRET + JSON.stringify(req.body)
-            //console.log(JSON.stringify(req.body) + process.env.APP_SECRET)
-           /*const calculated = crypto
-                .createHmac('sha256', process.env.APP_SECRET)
-                .update(testString, 'utf-8')
-                .digest("hex")*/
-                const calculated = crypto
-                .createHash('sha256')
-                .update(testString)
-                .digest("hex")
-            console.log(calculated)
-            console.log("----------------\n\n")
-
             if (!req.isXHubValid()) {
-                console.log('Warning - request header X-Hub-Signature not present or invalid');
+                const xHubSignature = req.headers["x-hub-signature-256"];
+                console.log("\n**************************************************************************")
+                console.log("\n THE X-HUB-SIGNATURE HEADER\n")
+                console.log(xHubSignature)
+                console.log("OUR GENERATED HEADER\n")
+                const requestBody = JSON.stringify(req.body)
+
+                const generatedHeader = crypto
+                    .createHmac('sha256', process.env.APP_SECRET)
+                    .update(requestBody, 'utf-8')
+                    .digest("hex")
+                    
+                console.log(generatedHeader)
+                console.log("**************************************************************************\n")
+
                 res.sendStatus(401);
                 return;
+            } else {
+                console.log('Invalid X-Hub-Signature header. Aborting.');
             }
 
             console.log('request header X-Hub-Signature validated');
