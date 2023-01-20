@@ -51,7 +51,7 @@ app.prepare()
                 .createHash("sha256")
                 .update(req.body, "utf-8")
                 .digest("hex")*/
-            console.log(calculated)
+            //console.log(calculated)
             console.log("----------------\n\n")
 
             if (!req.isXHubValid()) {
