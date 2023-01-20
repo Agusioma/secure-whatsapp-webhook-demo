@@ -1,6 +1,7 @@
 const express = require('express')
 var bodyParser = require('body-parser');
 const next = require('next')
+const crypto = require('crypto')
 const xhub = require('express-x-hub');
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
