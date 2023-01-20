@@ -49,7 +49,7 @@ app.prepare()
             const testString = JSON.stringify(req.body)
             //console.log(JSON.stringify(req.body) + process.env.APP_SECRET)
            const calculated = crypto
-                .createHmac('sha256', 'raueytfragdvshfjiuogaydvbhkjfehkjbn')
+                .createHmac('sha256', process.env.APP_SECRET)
                 .update(testString, 'utf-8')
                 .digest("hex")
             console.log(calculated)
