@@ -41,6 +41,13 @@ app.prepare()
 
         server.post('/safehook', function (req, res) {
             console.log('WhatsApp request body:', req.body);
+            const whatsappHmac= req.headers["x-hub-signature-256"];
+            console.log("HEADER\n\n")
+            console.log(whatsappHmac)
+            console.log("----------------\n\n")
+            console.log(req)
+            console.log("----------------\n\n")
+            console.log("----------------\n\n")
 
             if (!req.isXHubValid()) {
                 console.log('Warning - request header X-Hub-Signature not present or invalid');
