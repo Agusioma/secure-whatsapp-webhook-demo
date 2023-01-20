@@ -70,7 +70,7 @@ app.prepare()
                     // Adding the messages received
                     console.log('Message source verified. Proceeding to add this message:\n');
 
-                    console.log(JSON.stringify(requestBody))
+                    console.log(requestBody)
 
                     received_updates.unshift(req.body);
                     res.sendStatus(200);
