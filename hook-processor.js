@@ -46,12 +46,13 @@ app.prepare()
             console.log("HEADER\n\n")
             console.log(whatsappHmac)
             console.log("BOODY\n\n")
-            console.log(JSON.stringify(req.body) + process.env.APP_SECRET)
-           /* const calculated = crypto
-                .createHash("sha256")
-                .update(req.body, "utf-8")
-                .digest("hex")*/
-            //console.log(calculated)
+            const testString = JSON.stringify(req.body) + process.env.APP_SECRET
+            //console.log(JSON.stringify(req.body) + process.env.APP_SECRET)
+           const calculated = crypto
+                .createHash('sha256')
+                .update(testString)
+                .digest("hex")
+            console.log(calculated)
             console.log("----------------\n\n")
 
             if (!req.isXHubValid()) {
