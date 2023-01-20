@@ -46,7 +46,7 @@ app.prepare()
             console.log("HEADER\n\n")
             console.log(whatsappHmac)
             console.log("BOODY\n\n")
-            console.log(req.body + secret)
+            console.log(req.body + process.env.APP_SECRET)
            /* const calculated = crypto
                 .createHash("sha256")
                 .update(req.body, "utf-8")
