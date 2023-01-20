@@ -42,11 +42,11 @@ app.prepare()
 
         server.post('/safehook', function (req, res) {
             if (req.isXHubValid()) {
-                const xHubSignature = req.headers["x-hub-signature-256"];
+                const xHubSignature = req.headers["x-hub-signature-256"].substring(7);
                 console.log("\n**************************************************************************")
                 console.log("\n THE X-HUB-SIGNATURE HEADER\n")
                 console.log(xHubSignature)
-                console.log("OUR GENERATED HEADER\n")
+                console.log("\nOUR GENERATED HEADER\n")
                 const requestBody = JSON.stringify(req.body)
 
                 const generatedHeader = crypto
