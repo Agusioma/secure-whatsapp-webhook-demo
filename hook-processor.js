@@ -46,11 +46,15 @@ app.prepare()
             console.log("HEADER\n\n")
             console.log(whatsappHmac)
             console.log("BOODY\n\n")
-            const testString = JSON.stringify(req.body)
+            const testString = process.env.APP_SECRET + JSON.stringify(req.body)
             //console.log(JSON.stringify(req.body) + process.env.APP_SECRET)
-           const calculated = crypto
+           /*const calculated = crypto
                 .createHmac('sha256', process.env.APP_SECRET)
                 .update(testString, 'utf-8')
+                .digest("hex")*/
+                const calculated = crypto
+                .createHash('sha256')
+                .update(testString)
                 .digest("hex")
             console.log(calculated)
             console.log("----------------\n\n")
