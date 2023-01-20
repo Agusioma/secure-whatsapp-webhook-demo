@@ -45,12 +45,12 @@ app.prepare()
             const whatsappHmac = req.headers["x-hub-signature-256"];
             console.log("HEADER\n\n")
             console.log(whatsappHmac)
-            console.log("----------------\n\n")
-            //console.log(req.body)
-            const calculated = crypto
-                .createHmac("sha256", token)
+            console.log("BOODY\n\n")
+            console.log(req.body)
+           /* const calculated = crypto
+                .createHash("sha256")
                 .update(req.body, "utf-8")
-                .digest("hex")
+                .digest("hex")*/
             console.log(calculated)
             console.log("----------------\n\n")
 
