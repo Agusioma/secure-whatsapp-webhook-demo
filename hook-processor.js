@@ -19,9 +19,9 @@ app.prepare()
         server.use(xhub({ algorithm: 'sha1', secret: process.env.APP_SECRET }));
         server.use(bodyParser.json());
 
-        server.get('*', (req, res) => {
+       /* server.get('*', (req, res) => {
             return handle(req, res)
-        })
+        })*/
 
         server.get('/check', function (req, res) {
             console.log(req);
@@ -54,11 +54,7 @@ app.prepare()
             res.sendStatus(200);
         });
 
-        server.listen(3000, (err) => {
-            if (err) throw err
-            console.log("hey")
-            console.log('> Ready on http://localhost:3000')
-          })
+        server.listen()
     })
     .catch((ex) => {
         console.error(ex.stack)
