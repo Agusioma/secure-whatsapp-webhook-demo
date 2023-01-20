@@ -45,6 +45,7 @@ app.prepare()
             console.log("HEADER\n\n")
             console.log(whatsappHmac)
             console.log("----------------\n\n")
+            console.log(req.rawBody)
 
             if (!req.isXHubValid()) {
                 console.log('Warning - request header X-Hub-Signature not present or invalid');
