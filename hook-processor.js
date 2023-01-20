@@ -41,7 +41,7 @@ app.prepare()
         });
 
         server.post('/safehook', function (req, res) {
-            if (!req.isXHubValid()) {
+            if (req.isXHubValid()) {
                 const xHubSignature = req.headers["x-hub-signature-256"];
                 console.log("\n**************************************************************************")
                 console.log("\n THE X-HUB-SIGNATURE HEADER\n")
@@ -53,20 +53,20 @@ app.prepare()
                     .createHmac('sha256', process.env.APP_SECRET)
                     .update(requestBody, 'utf-8')
                     .digest("hex")
-                    
+
                 console.log(generatedHeader)
                 console.log("**************************************************************************\n")
 
-                res.sendStatus(401);
+                console.log('request header X-Hub-Signature validated');
+                // Process the Facebook updates here
+                received_updates.unshift(req.body);
+                res.sendStatus(200);
                 return;
             } else {
                 console.log('Invalid X-Hub-Signature header. Aborting.');
+                res.sendStatus(401);
             }
 
-            console.log('request header X-Hub-Signature validated');
-            // Process the Facebook updates here
-            received_updates.unshift(req.body);
-            res.sendStatus(200);
         });
 
         server.listen()
