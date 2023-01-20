@@ -42,7 +42,16 @@ app.prepare()
 
         server.post('/safehook', function (req, res) {
             if (req.isXHubValid()) {
+                console.log('\nValid X-Hub-Signature header. Proceeding...');
+
+                /*
+                    Removing the prepended shas56= string
+                */
+
                 const xHubSignature = req.headers["x-hub-signature-256"].substring(7);
+
+                //Displaying to the user
+
                 console.log("\n**************************************************************************")
                 console.log("\n THE X-HUB-SIGNATURE HEADER\n")
                 console.log(xHubSignature)
@@ -55,15 +64,23 @@ app.prepare()
                     .digest("hex")
 
                 console.log(generatedHeader)
-                console.log("**************************************************************************\n")
+                console.log("\n**************************************************************************\n")
 
-                console.log('request header X-Hub-Signature validated');
-                // Process the Facebook updates here
-                received_updates.unshift(req.body);
-                res.sendStatus(200);
+                if (generatedHeader == xHubSignature) {
+                    // Adding the messages received
+                    console.log('Message source verified. Proceeding to add this message:\n');
+
+                    console.log(JSON.stringify(requestBody))
+
+                    received_updates.unshift(req.body);
+                    res.sendStatus(200);
+                } else {
+                    console.log('An unverified message source. Aborting.\n');
+                    res.sendStatus(401);
+                }
                 return;
             } else {
-                console.log('Invalid X-Hub-Signature header. Aborting.');
+                console.log('Invalid X-Hub-Signature header. Aborting.\n');
                 res.sendStatus(401);
             }
 
