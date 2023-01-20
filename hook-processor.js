@@ -53,9 +53,9 @@ app.prepare()
                 //Displaying to the user
 
                 console.log("\n**************************************************************************")
-                console.log("\n THE X-HUB-SIGNATURE HEADER\n")
+                console.log("\n THE X-HUB-SIGNATURE HEADER:\n")
                 console.log(xHubSignature)
-                console.log("\nOUR GENERATED HEADER\n")
+                console.log("\nOUR GENERATED HEADER:\n")
                 const requestBody = JSON.stringify(req.body)
 
                 const generatedHeader = crypto
