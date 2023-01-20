@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node hook-processor.js"
+    "dev": "node hook-processor.js",
+    "build": "next build"
   },
   "dependencies": {
     "@next/font": "13.1.3",
