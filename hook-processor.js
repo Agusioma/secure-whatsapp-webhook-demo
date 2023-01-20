@@ -28,7 +28,7 @@ app.prepare()
             res.send('<pre>' + JSON.stringify(received_updates, null, 2) + '</pre>');
         });
 
-        server.get('/safehooks', function (req, res) {
+        server.get('/safehook', function (req, res) {
             if (
                 req.query['hub.mode'] == 'subscribe' &&
                 req.query['hub.verify_token'] == token
