@@ -39,7 +39,7 @@ app.prepare()
             }
         });
 
-        server.post('/safehooks', function (req, res) {
+        server.post('/safehook', function (req, res) {
             console.log('WhatsApp request body:', req.body);
 
             if (!req.isXHubValid()) {
