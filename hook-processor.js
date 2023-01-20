@@ -19,9 +19,9 @@ app.prepare()
         server.use(xhub({ algorithm: 'sha1', secret: process.env.APP_SECRET }));
         server.use(bodyParser.json());
 
-       /* server.get('*', (req, res) => {
-            return handle(req, res)
-        })*/
+        /* server.get('*', (req, res) => {
+             return handle(req, res)
+         })*/
 
         server.get('/check', function (req, res) {
             console.log(req);
@@ -41,11 +41,17 @@ app.prepare()
 
         server.post('/safehook', function (req, res) {
             console.log('WhatsApp request body:', req.body);
-            const whatsappHmac= req.headers["x-hub-signature-256"];
+            const whatsappHmac = req.headers["x-hub-signature-256"];
             console.log("HEADER\n\n")
             console.log(whatsappHmac)
             console.log("----------------\n\n")
-            console.log(req.rawBody)
+            //console.log(req.body)
+            const calculated = crypto
+                .createHmac("sha256", token)
+                .update(req.body, "utf-8")
+                .digest("hex")
+            console.log(calculated)
+            console.log("----------------\n\n")
 
             if (!req.isXHubValid()) {
                 console.log('Warning - request header X-Hub-Signature not present or invalid');
