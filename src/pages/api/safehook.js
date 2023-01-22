@@ -21,13 +21,12 @@ export default function handler(req, res) {
     }
 
   } else if (req.method === 'POST') {
-    console.log('\nValid X-Hub-Signature header. Proceeding...');
 
     //Removing the prepended 'sha256=' string
-    const xHubSignature = req.headers["x-hub-signature-256"].substring(7);
+   const xHubSignature = req.headers["x-hub-signature-256"].substring(7);
 
     //Displaying to the user
-    console.log("\n**************************************************************************")
+   /* console.log("\n**************************************************************************")
     console.log("\n THE X-HUB-SIGNATURE HEADER:\n")
     console.log(xHubSignature)
     console.log("\nOUR GENERATED HEADER:\n")
@@ -41,15 +40,15 @@ export default function handler(req, res) {
     console.log(generatedHeader)
     console.log("\n**************************************************************************\n")
 
-    if (generatedHeader == xHubSignature) {
+    if (generatedHeader == xHubSignature) {*/
       // Adding the messages received
-      console.log('Message source verified. This is the message:\n');
+   /*   console.log('Message source verified. This is the message:\n');
       console.log(requestBody)
       res.sendStatus(200);
     } else {
       console.log('An unverified message source. Aborting.\n');
       res.sendStatus(401);
     }
-    return;
+    return;*/
   }
 }
