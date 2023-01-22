@@ -11,15 +11,14 @@ let app_secret = process.env.APP_SECRET
 export default function handler(req, res) {
 
   if (req.method === 'GET') {
-   /* if (
+   if (
       req.query['hub.mode'] == 'subscribe' &&
       req.query['hub.verify_token'] == app_token
     ) {
       res.send(req.query['hub.challenge']);
     } else {
       res.sendStatus(400);
-    }*/
-    res.status(200).json({ name: 'John Doe' })
+    }
   } else if (req.method === 'POST') {
 
     //Removing the prepended 'sha256=' string
