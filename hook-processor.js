@@ -5,24 +5,20 @@ const crypto = require('crypto')
 const xhub = require('express-x-hub');
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
-const handle = app.getRequestHandler()
 
-var token = process.env.TOKEN || 'token';
-var received_updates = [];
+let token = process.env.TOKEN
+let received_updates = []
+let app_secret = process.env.APP_SECRET
 
 app.prepare()
     .then(() => {
         const server = express()
 
-        server.set('port', (process.env.PORT || 5000));
+        server.set('port', (process.env.PORT || 3000));
         server.listen(server.get('port'));
 
-        server.use(xhub({ algorithm: 'sha1', secret: process.env.APP_SECRET }));
+        server.use(xhub({ algorithm: 'sha1', secret: app_secret }));
         server.use(bodyParser.json());
-
-        /* server.get('*', (req, res) => {
-             return handle(req, res)
-         })*/
 
         server.get('/check', function (req, res) {
             console.log(req);
@@ -44,9 +40,7 @@ app.prepare()
             if (req.isXHubValid()) {
                 console.log('\nValid X-Hub-Signature header. Proceeding...');
 
-                /*
-                    Removing the prepended shas56= string
-                */
+                //Removing the prepended 'sha256=' string
 
                 const xHubSignature = req.headers["x-hub-signature-256"].substring(7);
 
@@ -56,8 +50,9 @@ app.prepare()
                 console.log("\n THE X-HUB-SIGNATURE HEADER:\n")
                 console.log(xHubSignature)
                 console.log("\nOUR GENERATED HEADER:\n")
-                const requestBody = JSON.stringify(req.body)
 
+
+                const requestBody = JSON.stringify(req.body)
                 const generatedHeader = crypto
                     .createHmac('sha256', process.env.APP_SECRET)
                     .update(requestBody, 'utf-8')
@@ -69,9 +64,7 @@ app.prepare()
                 if (generatedHeader == xHubSignature) {
                     // Adding the messages received
                     console.log('Message source verified. Proceeding to add this message:\n');
-
                     console.log(requestBody)
-
                     received_updates.unshift(req.body);
                     res.sendStatus(200);
                 } else {
@@ -86,7 +79,6 @@ app.prepare()
 
         });
 
-        server.listen()
     })
     .catch((ex) => {
         console.error(ex.stack)
