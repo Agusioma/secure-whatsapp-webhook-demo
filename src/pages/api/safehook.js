@@ -1,10 +1,7 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-const bodyParser = require('body-parser');
-const next = require('next')
 const crypto = require('crypto')
 
-let app_token = process.env.TOKEN
-let app_secret = process.env.APP_SECRET
+const app_token = process.env.TOKEN
+const app_secret = process.env.APP_SECRET
 
 export default function handler(req, res) {
 
