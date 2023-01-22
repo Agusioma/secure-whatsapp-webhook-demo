@@ -3,26 +3,22 @@ const bodyParser = require('body-parser');
 const next = require('next')
 const crypto = require('crypto')
 
-
-const app_env = process.env.NODE_ENV !== 'production'
 let app_token = process.env.TOKEN
 let app_secret = process.env.APP_SECRET
 
 export default function handler(req, res) {
 
   if (req.method === 'GET') {
-   if (
+    if (
       req.query['hub.mode'] == 'subscribe' &&
       req.query['hub.verify_token'] == app_token
     ) {
       res.send(req.query['hub.challenge']);
-    } else {
-      res.sendStatus(400);
     }
   } else if (req.method === 'POST') {
 
     //Removing the prepended 'sha256=' string
-   const xHubSignature = req.headers["x-hub-signature-256"].substring(7);
+    const xHubSignature = req.headers["x-hub-signature-256"].substring(7);
 
     //Displaying to the user
     console.log("\n**************************************************************************")
@@ -43,11 +39,8 @@ export default function handler(req, res) {
       // Adding the messages received
       console.log('Message source verified. This is the message:\n');
       console.log(requestBody)
-      res.sendStatus(200);
     } else {
       console.log('An unverified message source. Aborting.\n');
-      res.sendStatus(401);
     }
-    return;
   }
 }
