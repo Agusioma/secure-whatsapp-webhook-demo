@@ -10,7 +10,7 @@ let app_secret = process.env.APP_SECRET
 
 export default function handler(req, res) {
 
-  if (req.method === 'POST') {
+  if (req.method === 'GET') {
     if (
       req.query['hub.mode'] == 'subscribe' &&
       req.query['hub.verify_token'] == app_token
@@ -20,7 +20,7 @@ export default function handler(req, res) {
       res.sendStatus(400);
     }
 
-  } else if (req.method === 'GET') {
+  } else if (req.method === 'POST') {
     console.log('\nValid X-Hub-Signature header. Proceeding...');
 
     //Removing the prepended 'sha256=' string
